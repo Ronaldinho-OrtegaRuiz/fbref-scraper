@@ -31,3 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Ignorar WebDriverManager.java ###
+src/main/java/proyectospersonales/fbrefscraper/config/WebDriverManager.java
