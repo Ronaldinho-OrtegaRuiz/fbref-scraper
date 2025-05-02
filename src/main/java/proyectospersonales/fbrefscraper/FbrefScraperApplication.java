@@ -3,14 +3,18 @@ package proyectospersonales.fbrefscraper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import proyectospersonales.fbrefscraper.scraper.LeagueStatsScraper;
 import proyectospersonales.fbrefscraper.scraper.MatchStatsScraper;
 
 @SpringBootApplication
 public class FbrefScraperApplication implements CommandLineRunner {
-    private final MatchStatsScraper fbrefScraper;
+    private final MatchStatsScraper matchStatsScraper;
+    private final LeagueStatsScraper leagueStatsScraper;
 
-    public FbrefScraperApplication(MatchStatsScraper fbrefScraper) {
-        this.fbrefScraper = fbrefScraper;
+    public FbrefScraperApplication(MatchStatsScraper matchStatsScraper, LeagueStatsScraper leagueStatsScraper) {
+        this.matchStatsScraper = matchStatsScraper;
+        this.leagueStatsScraper = leagueStatsScraper;
+
     }
 
     public static void main(String[] args) {
@@ -20,9 +24,13 @@ public class FbrefScraperApplication implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        String equipoLocal = "Barcelona";
-        String equipoVisitante = "Real Madrid";
+        String localTeam = "Real Valladolid";
+        String awayTeam = "Barcelona";
+        String localLeague = "Spanish La Liga";
+        String awayLeague = "Spanish La Liga";
 
-        fbrefScraper.scrape(equipoLocal, equipoVisitante);
+        //leagueStatsScraper.scrape(localLeague, awayLeague);
+        matchStatsScraper.scrape(localTeam, localLeague, awayTeam, awayLeague);
+
     }
 }
