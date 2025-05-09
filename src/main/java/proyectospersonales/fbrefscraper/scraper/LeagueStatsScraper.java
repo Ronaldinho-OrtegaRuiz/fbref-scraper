@@ -48,7 +48,7 @@ public class LeagueStatsScraper {
         searchInput.sendKeys(leagueName);
         searchInput.sendKeys(Keys.ENTER);
 
-        if(leagueName.equals("Italian Serie A") || leagueName.equals("English Premier League") || leagueName.equals("German Bundesliga") || leagueName.equals("Dutch Eredivisie")) {
+        if (leagueName.equals("Italian Serie A") || leagueName.equals("English Premier League") || leagueName.equals("German Bundesliga") || leagueName.equals("Dutch Eredivisie")) {
             System.out.println("Buscando liga: " + leagueName);
             selectFirstLeagueInSearch(leagueName);
         }
@@ -93,7 +93,7 @@ public class LeagueStatsScraper {
     private void extractDataLeagueTable(WebDriver driver, WebElement leagueTable, String leagueName) {
         List<WebElement> filas = leagueTable.findElements(By.cssSelector("tbody > tr"));
 
-        String nameFile = "src/main/java/league_data/" + leagueName + ".csv";
+        String nameFile = "league_data/" + leagueName + ".csv";
         clearFile(nameFile);
 
         for (int i = 0; i < filas.size(); i++) {
@@ -138,8 +138,6 @@ public class LeagueStatsScraper {
     }
 
 
-
-
     private void selectFirstLeagueInSearch(String league) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
 
@@ -147,7 +145,7 @@ public class LeagueStatsScraper {
 
         WebElement selectedLeague;
 
-        if ("German Bundesliga".equalsIgnoreCase(league) || "Dutch Eredivise".equalsIgnoreCase(league) && leagues.size() >= 2 ) {
+        if ("German Bundesliga".equalsIgnoreCase(league)  || "Brazilian Série A".equalsIgnoreCase(league)) {
             selectedLeague = leagues.get(1);
         } else {
             selectedLeague = leagues.get(0);

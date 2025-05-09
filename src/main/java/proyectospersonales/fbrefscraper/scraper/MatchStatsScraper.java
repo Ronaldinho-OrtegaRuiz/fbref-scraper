@@ -120,13 +120,6 @@ public class MatchStatsScraper {
 
                 System.out.println("Entrando en el informe del partido: " + driver.getCurrentUrl());
 
-                PopupHandler.closePopupIfExist(
-                        driver,
-                        By.cssSelector("div#modal-close"),
-                        3,
-                        "modal del informe"
-                );
-
 
                 extractDataFromTheReport(siteCondition, league);
                 Thread.sleep(5000);
@@ -280,7 +273,7 @@ public class MatchStatsScraper {
             }
 
 
-            String nameFile = "src/main/java/data/" + team.toLowerCase().replace(" ", "_") + "-" + siteCondition.toLowerCase() + ".csv";
+            String nameFile = "data/" + team.toLowerCase().replace(" ", "_") + "-" + siteCondition.toLowerCase() + ".csv";
 
             saveInCSV(
                     nameFile,
@@ -401,7 +394,7 @@ public class MatchStatsScraper {
     }
 
     private int searchTeamInLeague(String leagueName, String rivalTeam) {
-        String leagueFilePath = "src/main/java/league_data/" + leagueName + ".csv";
+        String leagueFilePath = "league_data/" + leagueName + ".csv";
         int[] hierarchyRange = getHierarchyRange(leagueName);
 
         try (BufferedReader reader = new BufferedReader(new FileReader(leagueFilePath))) {

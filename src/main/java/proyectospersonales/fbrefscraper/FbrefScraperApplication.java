@@ -3,8 +3,9 @@ package proyectospersonales.fbrefscraper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import proyectospersonales.fbrefscraper.analyzer.CsvStatsLoader;
-import proyectospersonales.fbrefscraper.analyzer.StatsAnalyzer;
+import proyectospersonales.fbrefscraper.analyzer.loader.CsvStatsLoader;
+import proyectospersonales.fbrefscraper.analyzer.average.StatsAnalyzer;
+import proyectospersonales.fbrefscraper.analyzer.predictors.MatchPredictor;
 import proyectospersonales.fbrefscraper.scraper.LeagueStatsScraper;
 import proyectospersonales.fbrefscraper.scraper.MatchStatsScraper;
 
@@ -17,17 +18,20 @@ public class FbrefScraperApplication implements CommandLineRunner {
     private final LeagueStatsScraper leagueStatsScraper;
     private final CsvStatsLoader csvStatsLoader;
     private final StatsAnalyzer statsAnalyzer;
+    private final MatchPredictor matchPredictor;
 
     public FbrefScraperApplication(
             MatchStatsScraper matchStatsScraper,
             LeagueStatsScraper leagueStatsScraper,
             CsvStatsLoader csvStatsLoader,
-            StatsAnalyzer statsAnalyzer
+            StatsAnalyzer statsAnalyzer,
+            MatchPredictor matchPredictor
     ) {
         this.matchStatsScraper = matchStatsScraper;
         this.leagueStatsScraper = leagueStatsScraper;
         this.csvStatsLoader = csvStatsLoader;
         this.statsAnalyzer = statsAnalyzer;
+        this.matchPredictor = matchPredictor;
     }
 
     public static void main(String[] args) {
@@ -36,18 +40,19 @@ public class FbrefScraperApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String localTeam = "Valladolid";
-        String awayTeam = "Barcelona";
+        String localTeam = "Las Palmas";
+        String awayTeam = "Rayo Vallecano";
         String localLeague = "Spanish La Liga";
         String awayLeague = "Spanish La Liga";
-        String competition = "Spanish La Liga";
 
-        List<double[]> localStats = csvStatsLoader.loadAllStats(localTeam, "local");
-        List<double[]> awayStats = csvStatsLoader.loadAllStats(awayTeam, "visitante");
+        leagueStatsScraper.scrape(localLeague, awayLeague);
+        //matchStatsScraper.scrape(localTeam, localLeague, awayTeam, awayLeague);
 
-        statsAnalyzer.analyzeAndPrintStats(localStats, localTeam + " (local)");
-
-        statsAnalyzer.analyzeAndPrintStats(awayStats, awayTeam + " (visitante)");
+        //List<double[]> localStats = csvStatsLoader.loadAllStats(localTeam, "local");
+        //List<double[]> awayStats = csvStatsLoader.loadAllStats(awayTeam, "visitante");
+        //statsAnalyzer.analyzeAndPrintStats(localStats, localTeam + " (local)");
+        //statsAnalyzer.analyzeAndPrintStats(awayStats, awayTeam + " (visitante)");
+        //matchPredictor.predictors(localTeam, awayTeam);
 
     }
 }
